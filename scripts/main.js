@@ -27,9 +27,13 @@ class Game {
     this.player.update(inputs);
     // player shoot
     if (this.shots.length === 0 && inputs.shot === " ") {
-      this.shots.push(new Shots(this));
+      this.shots.push(
+        new Shots(this, this.player.x + this.player.width * 0.45, this.player.y)
+      );
     } else if (inputs.shot === " " && this.shotTimer > 15) {
-      this.shots.push(new Shots(this));
+      this.shots.push(
+        new Shots(this, this.player.x + this.player.width * 0.45, this.player.y)
+      );
       this.shotTimer = 0;
     } else {
       this.shotTimer++;
@@ -56,9 +60,6 @@ class Game {
     this.background.draw(ctx);
     this.player.draw(ctx);
     this.shots.forEach((shot) => shot.draw(ctx));
-    this.enemies.forEach((enemy) => {
-      enemy.draw(ctx);
-    });
 
     this.enemiesShots(ctx);
   }
@@ -73,16 +74,7 @@ class Game {
   }
   enemiesShots(ctx) {
     this.enemies.forEach((enemy) => {
-      let shotPosX = enemy.x + enemy.width * 0.5 - enemy.shotWidth * 0.5;
-      ctx.fillStyle = "green";
-      if (enemy.y > 0) {
-        ctx.fillRect(
-          shotPosX,
-          enemy.shotPosY,
-          enemy.shotWidth,
-          enemy.shotHeight
-        );
-      }
+      enemy.draw(ctx);
     });
   }
 }

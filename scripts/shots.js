@@ -1,11 +1,10 @@
 export class Shots {
-  constructor(game) {
+  constructor(game, x, y) {
     this.game = game;
     this.width = 20;
     this.height = 20;
-    this.x =
-      this.game.player.x - this.width * 0.5 + this.game.player.width * 0.5;
-    this.y = this.game.player.y;
+    this.x = x;
+    this.y = y;
     this.speed = 2;
     this.markedForDeletion = false;
   }

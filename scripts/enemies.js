@@ -1,3 +1,5 @@
+import { Shots } from "./shots.js";
+
 export class Enemy {
   constructor(game, gameWidth, gameHeight) {
     this.game = game;
@@ -15,6 +17,9 @@ export class Enemy {
     this.shotHeight = 20;
     this.shotPosY = this.y - this.height;
     this.enemyShotSpeed = 3;
+    this.enemyShotTimer = 0;
+    this.shotInterval = 500;
+    this.enemyShots = [];
   }
   update() {
     this.y += this.speed;
@@ -28,10 +33,30 @@ export class Enemy {
     this.x += Math.floor(Math.random() * 2 - this.dx);
 
     this.shotPosY += this.enemyShotSpeed;
+
+    this.enemyShotTimer += 12;
+
+    if (this.enemyShotTimer > this.shotInterval) {
+      this.enemyShots.push(
+        new Shots(this.game, this.x + this.width * 0.5, this.y + this.height)
+      );
+      this.enemyShotTimer = 0;
+    }
+
+    // Update and remove shots
+    this.enemyShots.forEach((shot) => {
+      shot.update();
+      if (shot.markedForDeletion) {
+        this.enemyShots.splice(this.enemyShots.indexOf(shot), 1);
+      }
+    });
   }
   ///
   draw(ctx) {
     ctx.fillStyle = "red";
     ctx.fillRect(this.x, this.y, this.width, this.height);
+
+    // Draw shots
+    this.enemyShots.forEach((shot) => shot.draw(ctx));
   }
 }
