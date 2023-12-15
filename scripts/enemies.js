@@ -1,4 +1,4 @@
-import { Shots } from "./shots.js";
+import { EnemyShots } from "./shots.js";
 
 export class Enemy {
   constructor(game, gameWidth, gameHeight) {
@@ -17,6 +17,7 @@ export class Enemy {
     this.shotHeight = 20;
     this.shotPosY = this.y - this.height;
     this.enemyShotSpeed = 3;
+    this.enemyShotFrame = 5;
     this.enemyShotTimer = 0;
     this.shotInterval = 500;
     this.enemyShots = [];
@@ -34,11 +35,15 @@ export class Enemy {
 
     this.shotPosY += this.enemyShotSpeed;
 
-    this.enemyShotTimer += 12;
+    this.enemyShotTimer += this.enemyShotFrame;
 
     if (this.enemyShotTimer > this.shotInterval) {
       this.enemyShots.push(
-        new Shots(this.game, this.x + this.width * 0.5, this.y + this.height)
+        new EnemyShots(
+          this.game,
+          this.x + this.width * 0.5,
+          this.y + this.height
+        )
       );
       this.enemyShotTimer = 0;
     }
