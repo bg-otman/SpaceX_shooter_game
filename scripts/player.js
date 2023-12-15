@@ -44,6 +44,8 @@ export class Player {
     ////
   }
   draw(ctx) {
+    ctx.strokeStyle = "white";
+    ctx.strokeRect(this.x, this.y, this.width, this.height);
     ctx.drawImage(this.playerImage, this.x, this.y, this.width, this.height);
   }
 }

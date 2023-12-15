@@ -55,12 +55,21 @@ export class Enemy {
         this.enemyShots.splice(this.enemyShots.indexOf(shot), 1);
       }
     });
+
+    // enemy-player collision
+    if (
+      this.y + this.height > this.game.player.y &&
+      this.y < this.game.player.y + this.game.player.height &&
+      this.x + this.width >= this.game.player.x &&
+      this.x < this.game.player.x + this.game.player.width
+    ) {
+      this.markedForDeletion = true;
+    }
   }
   ///
   draw(ctx) {
     ctx.fillStyle = "red";
     ctx.fillRect(this.x, this.y, this.width, this.height);
-
     // Draw shots
     this.enemyShots.forEach((shot) => shot.draw(ctx));
   }

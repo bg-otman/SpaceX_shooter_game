@@ -53,7 +53,7 @@ class Game {
       }
       enemy.update();
     });
-    this.addEnemy(deltaTime);
+    this.addEnemy(deltaTime); /// here
   }
   ///
   draw(ctx) {

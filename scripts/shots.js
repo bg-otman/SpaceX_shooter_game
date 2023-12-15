@@ -14,6 +14,19 @@ export class Shots {
     if (this.y + this.height < 0) {
       this.markedForDeletion = true;
     }
+
+    // enemy-playerShot collision
+    this.game.enemies.forEach((enemy) => {
+      if (
+        this.y + this.height > enemy.y &&
+        this.y < enemy.y + enemy.height &&
+        this.x + this.width >= enemy.x &&
+        this.x < enemy.x + enemy.width
+      ) {
+        enemy.markedForDeletion = true;
+        this.markedForDeletion = true;
+      }
+    });
   }
 
   draw(ctx) {
@@ -36,6 +49,16 @@ export class EnemyShots {
     this.y += this.speed;
 
     if (this.y > this.game.gameHeight) {
+      this.markedForDeletion = true;
+    }
+
+    // enemyShot-player collision
+    if (
+      this.y + this.height > this.game.player.y &&
+      this.y < this.game.player.y + this.game.player.height &&
+      this.x + this.width >= this.game.player.x &&
+      this.x < this.game.player.x + this.game.player.width
+    ) {
       this.markedForDeletion = true;
     }
   }
