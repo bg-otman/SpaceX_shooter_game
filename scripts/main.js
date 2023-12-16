@@ -26,11 +26,7 @@ class Game {
     this.background.update();
     this.player.update(inputs);
     // player shoot
-    if (this.shots.length === 0 && inputs.shot === " ") {
-      this.shots.push(
-        new Shots(this, this.player.x + this.player.width * 0.45, this.player.y)
-      );
-    } else if (inputs.shot === " " && this.shotTimer > 15) {
+    if (inputs.shot === " " && this.shotTimer > 15) {
       this.shots.push(
         new Shots(this, this.player.x + this.player.width * 0.45, this.player.y)
       );
@@ -53,15 +49,16 @@ class Game {
       }
       enemy.update();
     });
-    this.addEnemy(deltaTime); /// here
+    this.addEnemy(deltaTime);
   }
   ///
   draw(ctx) {
     this.background.draw(ctx);
     this.player.draw(ctx);
     this.shots.forEach((shot) => shot.draw(ctx));
-
-    this.enemiesShots(ctx);
+    this.enemies.forEach((enemy) => {
+      enemy.draw(ctx);
+    });
   }
   ///
   addEnemy(deltaTime) {
@@ -71,11 +68,6 @@ class Game {
     } else {
       this.enemiesTimer += deltaTime;
     }
-  }
-  enemiesShots(ctx) {
-    this.enemies.forEach((enemy) => {
-      enemy.draw(ctx);
-    });
   }
 }
 

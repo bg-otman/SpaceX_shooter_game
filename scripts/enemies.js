@@ -23,16 +23,18 @@ export class Enemy {
     this.enemyShots = [];
   }
   update() {
+    // vertical mouvement
     this.y += this.speed;
     if (this.y > this.gameHeight) {
       this.markedForDeletion = true;
     }
-
+    // horizontal mouvement
     if (this.x + this.width > this.gameWidth || this.x < 0) {
       this.dx = -this.dx;
     }
     this.x += Math.floor(Math.random() * 2 - this.dx);
 
+    // enemy shots
     this.shotPosY += this.enemyShotSpeed;
 
     this.enemyShotTimer += this.enemyShotFrame;
