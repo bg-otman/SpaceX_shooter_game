@@ -1,7 +1,7 @@
 import { Player } from "./player.js";
 import { Inputs } from "./inputs.js";
 import { Background } from "./background.js";
-import { Shots } from "./shots.js";
+import { Shots, EnemyShots } from "./shots.js";
 import { Enemy } from "./enemies.js";
 
 const canvas = document.getElementById("myCanvas");
@@ -21,6 +21,10 @@ class Game {
     this.enemies = [];
     this.enemiesInterval = 3500;
     this.enemiesTimer = 0;
+    this.enemyShotFrame = 5;
+    this.enemyShotTimer = 0;
+    this.shotInterval = 500;
+    this.enemyShots = [];
   }
   update(inputs, deltaTime) {
     this.background.update();
@@ -50,15 +54,15 @@ class Game {
       enemy.update();
     });
     this.addEnemy(deltaTime);
+    this.enemyShot();
   }
   ///
   draw(ctx) {
     this.background.draw(ctx);
     this.player.draw(ctx);
     this.shots.forEach((shot) => shot.draw(ctx));
-    this.enemies.forEach((enemy) => {
-      enemy.draw(ctx);
-    });
+    this.enemies.forEach((enemy) => enemy.draw(ctx));
+    this.enemyShots.forEach((shot) => shot.draw(ctx));
   }
   ///
   addEnemy(deltaTime) {
@@ -68,6 +72,26 @@ class Game {
     } else {
       this.enemiesTimer += deltaTime;
     }
+  }
+  // I placed enemy shot here, to keep the shots even the enemy is destroyed
+  enemyShot() {
+    this.enemyShotTimer += this.enemyShotFrame;
+
+    if (this.enemyShotTimer > this.shotInterval) {
+      this.enemies.forEach((e) => {
+        this.enemyShots.push(
+          new EnemyShots(this, e.x + e.width * 0.5, e.y + e.height)
+        );
+      });
+      this.enemyShotTimer = 0;
+    }
+    // Update and remove shots
+    this.enemyShots.forEach((shot) => {
+      shot.update();
+      if (shot.markedForDeletion) {
+        this.enemyShots.splice(this.enemyShots.indexOf(shot), 1);
+      }
+    });
   }
 }
 

@@ -1,5 +1,3 @@
-import { EnemyShots } from "./shots.js";
-
 export class Enemy {
   constructor(game, gameWidth, gameHeight) {
     this.game = game;
@@ -13,10 +11,6 @@ export class Enemy {
     this.speed = 1;
     this.markedForDeletion = false;
     this.dx = Math.ceil(Math.random() * 2);
-    this.enemyShotFrame = 5;
-    this.enemyShotTimer = 0;
-    this.shotInterval = 500;
-    this.enemyShots = [];
   }
   update() {
     // vertical mouvement
@@ -29,28 +23,6 @@ export class Enemy {
       this.dx = -this.dx;
     }
     this.x += Math.floor(Math.random() * 2 - this.dx);
-
-    // enemy shots
-    this.enemyShotTimer += this.enemyShotFrame;
-
-    if (this.enemyShotTimer > this.shotInterval) {
-      this.enemyShots.push(
-        new EnemyShots(
-          this.game,
-          this.x + this.width * 0.5,
-          this.y + this.height
-        )
-      );
-      this.enemyShotTimer = 0;
-    }
-
-    // Update and remove shots
-    this.enemyShots.forEach((shot) => {
-      shot.update();
-      if (shot.markedForDeletion) {
-        this.enemyShots.splice(this.enemyShots.indexOf(shot), 1);
-      }
-    });
 
     // enemy-player collision
     if (
@@ -66,7 +38,5 @@ export class Enemy {
   draw(ctx) {
     ctx.fillStyle = "red";
     ctx.fillRect(this.x, this.y, this.width, this.height);
-    // Draw shots
-    this.enemyShots.forEach((shot) => shot.draw(ctx));
   }
 }

@@ -68,6 +68,3 @@ export class EnemyShots {
     ctx.fillRect(this.x, this.y, this.width, this.height);
   }
 }
-
-////
-/// I need to keep the enemies shot, although the enemy deleted!!!!!!!!!!!!!!!!!!!!!!!!!!
