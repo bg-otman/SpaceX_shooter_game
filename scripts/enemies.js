@@ -13,10 +13,6 @@ export class Enemy {
     this.speed = 1;
     this.markedForDeletion = false;
     this.dx = Math.ceil(Math.random() * 2);
-    this.shotWidth = 20;
-    this.shotHeight = 20;
-    this.shotPosY = this.y - this.height;
-    this.enemyShotSpeed = 3;
     this.enemyShotFrame = 5;
     this.enemyShotTimer = 0;
     this.shotInterval = 500;
@@ -35,8 +31,6 @@ export class Enemy {
     this.x += Math.floor(Math.random() * 2 - this.dx);
 
     // enemy shots
-    this.shotPosY += this.enemyShotSpeed;
-
     this.enemyShotTimer += this.enemyShotFrame;
 
     if (this.enemyShotTimer > this.shotInterval) {

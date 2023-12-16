@@ -72,7 +72,7 @@ class Game {
 }
 
 const inputs = new Inputs();
-export const game = new Game(canvas.width, canvas.height);
+const game = new Game(canvas.width, canvas.height);
 
 let lastStamp = 0;
 function animate(timeStamp) {
