@@ -37,6 +37,6 @@ export function score(ctx, game) {
   ///
   ctx.font = "30px fantasy";
   ctx.textAlign = "center";
-  ctx.fillStyle = "red";
+  ctx.fillStyle = "#162997";
   ctx.fillText(game.gameScore, boardPosX - 81, boardPosY / 1.6);
 }

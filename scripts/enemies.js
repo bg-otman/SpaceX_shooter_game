@@ -3,11 +3,11 @@ export class Enemy {
     this.game = game;
     this.gameWidth = gameWidth;
     this.gameHeight = gameHeight;
-    this.width = 60;
-    this.height = 60;
+    this.width = 171;
+    this.height = 61;
     this.x = Math.random() * (this.gameWidth - this.width);
     this.y = -this.height;
-    this.imageEnemy = "";
+    this.imageEnemy = document.getElementById("enemyOneImg");
     this.speed = 1;
     this.markedForDeletion = false;
     this.dx = Math.ceil(Math.random() * 2);
@@ -30,8 +30,7 @@ export class Enemy {
   }
   ///
   draw(ctx) {
-    ctx.fillStyle = "red";
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    ctx.drawImage(this.imageEnemy, this.x, this.y, this.width, this.height);
   }
   ///
   enemyPlayerCollision() {
