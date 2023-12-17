@@ -13,6 +13,7 @@ export class Shots {
 
     if (this.y + this.height < 0) {
       this.markedForDeletion = true;
+      if (this.game.maxShots < 15) this.game.maxShots++;
     }
 
     // playerShot collision with enemy
@@ -20,6 +21,7 @@ export class Shots {
       if (this.playerShotCollision(enemy)) {
         enemy.markedForDeletion = true;
         this.markedForDeletion = true;
+        if (this.game.maxShots < 15) this.game.maxShots++;
         this.game.gameScore++;
       }
     });

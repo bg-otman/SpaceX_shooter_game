@@ -40,3 +40,33 @@ export function score(ctx, game) {
   ctx.fillStyle = "#162997";
   ctx.fillText(game.gameScore, boardPosX - 81, boardPosY / 1.6);
 }
+
+export function shotsAmo(ctx, game) {
+  ctx.font = "30px fantasy";
+  ctx.textAlign = "center";
+  ctx.fillStyle = "#f15a18";
+  ctx.fillText(
+    `Bullets: ${game.maxShots - 7}`,
+    game.gameWidth - 100,
+    game.gameHeight - 20
+  );
+}
+
+export function gameEnd(ctx, game) {
+  ctx.save();
+  ctx.shadowOffsetX = 2;
+  ctx.shadowOffsetY = 3;
+  ctx.shadowBlur = 2;
+  ctx.shadowColor = "white";
+  ctx.font = "60px fantasy";
+  ctx.textAlign = "center";
+  ctx.fillStyle = "#ee3434";
+  ctx.fillText("Game Over!", game.gameWidth * 0.5, game.gameHeight * 0.4);
+  ctx.font = "40px fantasy";
+  ctx.fillText(
+    "Press Enter to Restart",
+    game.gameWidth * 0.5,
+    game.gameHeight * 0.5
+  );
+  ctx.restore();
+}

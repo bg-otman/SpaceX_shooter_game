@@ -3,7 +3,7 @@ import { Inputs } from "./inputs.js";
 import { Background } from "./background.js";
 import { Shots, EnemyShots } from "./shots.js";
 import { Enemy } from "./enemies.js";
-import { playerHealth, score } from "./ui.js";
+import { playerHealth, score, shotsAmo, gameEnd } from "./ui.js";
 
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
@@ -19,6 +19,7 @@ class Game {
     this.background = new Background(this, this.gameWidth, this.gameHeight);
     this.gameOver = false;
     this.shots = [];
+    this.maxShots = 15;
     this.shotTimer = 0;
     this.enemies = [];
     this.enemiesInterval = 3500;
@@ -33,11 +34,16 @@ class Game {
     this.background.update();
     this.player.update(inputs);
     // player shoot
-    if (inputs.shot === " " && this.shotTimer > 15) {
+    if (
+      inputs.shot === " " &&
+      this.shotTimer > 15 &&
+      this.shots.length < this.maxShots
+    ) {
       this.shots.push(
         new Shots(this, this.player.x + this.player.width * 0.45, this.player.y)
       );
       this.shotTimer = 0;
+      this.maxShots--;
     } else {
       this.shotTimer++;
     }
@@ -70,6 +76,7 @@ class Game {
     this.enemies.forEach((enemy) => enemy.draw(ctx));
     this.enemyShots.forEach((shot) => shot.draw(ctx));
     score(ctx, this);
+    shotsAmo(ctx, this);
   }
   ///
   addEnemy(deltaTime) {
@@ -112,6 +119,12 @@ function animate(timeStamp) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   game.update(inputs, deltaTime);
   game.draw(ctx);
-  if (!game.gameOver) requestAnimationFrame(animate);
+  if (!game.gameOver) {
+    requestAnimationFrame(animate);
+  } else {
+    gameEnd(ctx, game);
+  }
 }
 animate(0);
+
+// config restart game feature!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
