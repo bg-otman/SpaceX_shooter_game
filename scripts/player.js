@@ -3,13 +3,14 @@ export class Player {
     this.game = game;
     this.gameWidth = gameWidth;
     this.gameHeight = gameHeight;
-    this.width = 199;
-    this.height = 127.5;
+    this.width = 170;
+    this.height = 105;
     this.x = 240;
     this.y = 450;
     this.speedX = 0;
     this.speedY = 0;
     this.playerImage = document.getElementById("player");
+    this.health = 300;
   }
   update(inputs) {
     // horizontal movement

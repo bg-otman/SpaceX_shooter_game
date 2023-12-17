@@ -24,13 +24,7 @@ export class Enemy {
     }
     this.x += Math.floor(Math.random() * 2 - this.dx);
 
-    // enemy-player collision
-    if (
-      this.y + this.height > this.game.player.y &&
-      this.y < this.game.player.y + this.game.player.height &&
-      this.x + this.width >= this.game.player.x &&
-      this.x < this.game.player.x + this.game.player.width
-    ) {
+    if (this.enemyPlayerCollision()) {
       this.markedForDeletion = true;
     }
   }
@@ -38,5 +32,14 @@ export class Enemy {
   draw(ctx) {
     ctx.fillStyle = "red";
     ctx.fillRect(this.x, this.y, this.width, this.height);
+  }
+  ///
+  enemyPlayerCollision() {
+    return (
+      this.y + this.height > this.game.player.y &&
+      this.y < this.game.player.y + this.game.player.height &&
+      this.x + this.width >= this.game.player.x &&
+      this.x < this.game.player.x + this.game.player.width
+    );
   }
 }

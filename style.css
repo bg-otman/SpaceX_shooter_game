@@ -11,8 +11,8 @@ body {
 
 #myCanvas {
   border: 1px solid white;
-  width: 600px;
-  height: 650px;
+  max-width: 100%;
+  max-height: 100%;
   position: absolute;
   top: 50%;
   left: 50%;

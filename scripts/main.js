@@ -3,11 +3,12 @@ import { Inputs } from "./inputs.js";
 import { Background } from "./background.js";
 import { Shots, EnemyShots } from "./shots.js";
 import { Enemy } from "./enemies.js";
+import { playerHealth, score } from "./ui.js";
 
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
-canvas.width = 600;
+canvas.width = 700;
 canvas.height = 650;
 
 class Game {
@@ -16,6 +17,7 @@ class Game {
     this.gameHeight = gameHeight;
     this.player = new Player(this, this.gameWidth, this.gameHeight);
     this.background = new Background(this, this.gameWidth, this.gameHeight);
+    this.gameOver = false;
     this.shots = [];
     this.shotTimer = 0;
     this.enemies = [];
@@ -25,6 +27,7 @@ class Game {
     this.enemyShotTimer = 0;
     this.shotInterval = 500;
     this.enemyShots = [];
+    this.gameScore = 0;
   }
   update(inputs, deltaTime) {
     this.background.update();
@@ -55,14 +58,18 @@ class Game {
     });
     this.addEnemy(deltaTime);
     this.enemyShot();
+    // game over
+    if (this.player.health <= 0) this.gameOver = true;
   }
   ///
   draw(ctx) {
     this.background.draw(ctx);
+    playerHealth(ctx, this);
     this.player.draw(ctx);
     this.shots.forEach((shot) => shot.draw(ctx));
     this.enemies.forEach((enemy) => enemy.draw(ctx));
     this.enemyShots.forEach((shot) => shot.draw(ctx));
+    score(ctx, this);
   }
   ///
   addEnemy(deltaTime) {
@@ -105,6 +112,6 @@ function animate(timeStamp) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   game.update(inputs, deltaTime);
   game.draw(ctx);
-  requestAnimationFrame(animate);
+  if (!game.gameOver) requestAnimationFrame(animate);
 }
 animate(0);
