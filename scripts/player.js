@@ -11,6 +11,7 @@ export class Player {
     this.speedY = 0;
     this.playerImage = document.getElementById("player");
     this.health = 300;
+    this.playerDead = false;
   }
   update(inputs) {
     // horizontal movement
@@ -43,10 +44,13 @@ export class Player {
       this.speedY = 0;
     }
     ////
+    if (this.health <= 0) this.playerDead = true;
   }
   draw(ctx) {
-    ctx.strokeStyle = "white";
-    ctx.strokeRect(this.x, this.y, this.width, this.height);
-    ctx.drawImage(this.playerImage, this.x, this.y, this.width, this.height);
+    // ctx.strokeStyle = "white";
+    // ctx.strokeRect(this.x, this.y, this.width, this.height);
+    if (!this.playerDead) {
+      ctx.drawImage(this.playerImage, this.x, this.y, this.width, this.height);
+    }
   }
 }

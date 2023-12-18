@@ -4,6 +4,7 @@ import { Background } from "./background.js";
 import { Shots, EnemyShots } from "./shots.js";
 import { Enemy } from "./enemies.js";
 import { playerHealth, score, shotsAmo, gameEnd } from "./ui.js";
+import { Boom } from "./explosion.js";
 
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
@@ -18,17 +19,18 @@ class Game {
     this.player = new Player(this, this.gameWidth, this.gameHeight);
     this.background = new Background(this, this.gameWidth, this.gameHeight);
     this.gameOver = false;
+    this.gameScore = 0;
     this.shots = [];
+    this.enemies = [];
+    this.enemyShots = [];
+    this.explosions = [];
     this.maxShots = 15;
     this.shotTimer = 0;
-    this.enemies = [];
     this.enemiesInterval = 3500;
     this.enemiesTimer = 0;
     this.enemyShotFrame = 5;
     this.enemyShotTimer = 0;
     this.shotInterval = 500;
-    this.enemyShots = [];
-    this.gameScore = 0;
   }
   update(inputs, deltaTime) {
     this.background.update();
@@ -62,14 +64,31 @@ class Game {
     // enemies
     this.enemies.forEach((enemy) => {
       if (enemy.markedForDeletion) {
+        this.explosions.push(new Boom(this, enemy.x, enemy.y));
         this.enemies.splice(this.enemies.indexOf(enemy), 1);
       }
       enemy.update();
     });
+
+    this.explosions.forEach((boom) => {
+      boom.update(deltaTime);
+      if (boom.markedForDeletion) {
+        this.explosions.splice(this.explosions.indexOf(boom), 1);
+      }
+    });
     this.addEnemy(deltaTime);
     this.enemyShot();
     // game over
-    if (this.player.health <= 0) this.gameOver = true;
+    if (this.player.playerDead) {
+      this.explosions.push(
+        new Boom(
+          this,
+          this.player.x + this.player.width * 0.5,
+          this.player.y + this.player.height * 0.5
+        )
+      );
+      this.gameOver = true;
+    }
   }
   ///
   draw(ctx) {
@@ -79,6 +98,7 @@ class Game {
     this.shots.forEach((shot) => shot.draw(ctx));
     this.enemies.forEach((enemy) => enemy.draw(ctx));
     this.enemyShots.forEach((shot) => shot.draw(ctx));
+    this.explosions.forEach((boom) => boom.draw(ctx));
     score(ctx, this);
     shotsAmo(ctx, this);
   }
@@ -91,7 +111,7 @@ class Game {
       this.enemiesTimer += deltaTime;
     }
   }
-  // I placed enemy shot here, to keep the shots even the enemy is destroyed
+  // I placed enemy shot here, to keeps the shots even the enemy is destroyed
   enemyShot() {
     this.enemyShotTimer += this.enemyShotFrame;
 
@@ -116,6 +136,12 @@ class Game {
 const inputs = new Inputs();
 const game = new Game(canvas.width, canvas.height);
 
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && game.gameOver) {
+    restartGame(game);
+  }
+});
+
 let lastStamp = 0;
 function animate(timeStamp) {
   const deltaTime = timeStamp - lastStamp;
@@ -131,4 +157,20 @@ function animate(timeStamp) {
 }
 animate(0);
 
-// config restart game feature!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+function restartGame(game) {
+  game.player = new Player(game, game.gameWidth, game.gameHeight);
+  game.gameOver = false;
+  game.gameScore = 0;
+  game.shots = [];
+  game.enemies = [];
+  game.enemyShots = [];
+  game.explosions = [];
+  game.maxShots = 15;
+  game.shotTimer = 0;
+  game.enemiesInterval = 3500;
+  game.enemiesTimer = 0;
+  game.enemyShotFrame = 5;
+  game.enemyShotTimer = 0;
+  game.shotInterval = 500;
+  animate(0);
+}

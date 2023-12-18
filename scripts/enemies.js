@@ -11,6 +11,7 @@ export class Enemy {
     this.speed = 1;
     this.markedForDeletion = false;
     this.dx = Math.ceil(Math.random() * 2);
+    this.enemyHealth = 2;
   }
   update() {
     // vertical mouvement

@@ -54,11 +54,11 @@ export function shotsAmo(ctx, game) {
 
 export function gameEnd(ctx, game) {
   ctx.save();
+  ctx.font = "60px fantasy";
   ctx.shadowOffsetX = 2;
   ctx.shadowOffsetY = 3;
   ctx.shadowBlur = 2;
   ctx.shadowColor = "white";
-  ctx.font = "60px fantasy";
   ctx.textAlign = "center";
   ctx.fillStyle = "#ee3434";
   ctx.fillText("Game Over!", game.gameWidth * 0.5, game.gameHeight * 0.4);

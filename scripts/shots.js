@@ -20,10 +20,19 @@ export class Shots {
     // playerShot collision with enemy
     this.game.enemies.forEach((enemy) => {
       if (this.playerShotCollision(enemy)) {
-        enemy.markedForDeletion = true;
-        this.markedForDeletion = true;
-        if (this.game.maxShots < 15) this.game.maxShots++;
-        this.game.gameScore++;
+        if (enemy.enemyHealth > 0) {
+          enemy.enemyHealth--;
+          this.markedForDeletion = true;
+          // after the shot hit the enemy, recharge the bullets again
+          if (this.game.maxShots < 15) this.game.maxShots++;
+        } else {
+          enemy.markedForDeletion = true;
+          this.markedForDeletion = true;
+
+          if (this.game.maxShots < 15) this.game.maxShots++;
+
+          this.game.gameScore++;
+        }
       }
     });
   }
