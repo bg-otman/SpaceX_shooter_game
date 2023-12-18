@@ -40,7 +40,11 @@ class Game {
       this.shots.length < this.maxShots
     ) {
       this.shots.push(
-        new Shots(this, this.player.x + this.player.width * 0.45, this.player.y)
+        new Shots(
+          this,
+          this.player.x + this.player.width * 0.42,
+          this.player.y - 30
+        )
       );
       this.shotTimer = 0;
       this.maxShots--;

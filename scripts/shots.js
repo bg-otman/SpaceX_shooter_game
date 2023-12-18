@@ -1,12 +1,13 @@
 export class Shots {
   constructor(game, x, y) {
     this.game = game;
-    this.width = 20;
-    this.height = 20;
+    this.width = 30;
+    this.height = 50;
     this.x = x;
     this.y = y;
     this.speed = 2;
     this.markedForDeletion = false;
+    this.greenLaser = document.getElementById("greenLaser");
   }
   update() {
     this.y -= this.speed;
@@ -28,8 +29,7 @@ export class Shots {
   }
 
   draw(ctx) {
-    ctx.fillStyle = "white";
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    ctx.drawImage(this.greenLaser, this.x, this.y, this.width, this.height);
   }
 
   playerShotCollision(enemy) {
@@ -45,12 +45,13 @@ export class Shots {
 export class EnemyShots {
   constructor(game, x, y) {
     this.game = game;
-    this.width = 20;
-    this.height = 20;
+    this.width = 30;
+    this.height = 35;
     this.x = x;
     this.y = y;
     this.speed = 2;
     this.markedForDeletion = false;
+    this.redLaser = document.getElementById("redLaser");
   }
   update() {
     this.y += this.speed;
@@ -67,8 +68,7 @@ export class EnemyShots {
   }
 
   draw(ctx) {
-    ctx.fillStyle = "yellow";
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    ctx.drawImage(this.redLaser, this.x, this.y, this.width, this.height);
   }
   enemyShotCollision() {
     return (
