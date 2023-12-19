@@ -8,17 +8,34 @@
     <title>Plane Game</title>
   </head>
   <body>
-    <canvas id="myCanvas"></canvas>
+    <!-- main container -->
+    <div class="container">
+      <!-- start game ui -->
+      <div class="start_game">
+        <button id="startBtn">Start Game</button>
+      </div>
+      <!-- Main canvas -->
+      <canvas id="myCanvas"></canvas>
+      <!-- Music -->
+      <div class="msc">
+        <img src="images/volume.png" alt="img" id="musicIcon" />
+        <audio id="music">
+          <source src="sounds/arcade-music.mp3" type="audio/mpeg" />
+        </audio>
+      </div>
+    </div>
 
-    <!-- images -->
-    <img src="images/Nebula Blue.png" alt="img" id="pink-bg" />
-    <img src="images/stars.png" alt="img" id="stars-bg" />
-    <img src="images/player-img.png" alt="img" id="player" />
-    <img src="images/enemy-one.png" alt="img" id="enemyOneImg" />
-    <img src="images/score-board.png" alt="img" id="scoreBoard" />
-    <img src="images/laser-green.png" alt="img" id="greenLaser" />
-    <img src="images/red-laser.png" alt="img" id="redLaser" />
-    <img src="images/explosion-image.png" alt="img" id="explosion" />
+    <div class="resourcess">
+      <!-- images -->
+      <img src="images/Nebula Blue.png" alt="img" id="pink-bg" />
+      <img src="images/stars.png" alt="img" id="stars-bg" />
+      <img src="images/player-img.png" alt="img" id="player" />
+      <img src="images/enemy-one.png" alt="img" id="enemyOneImg" />
+      <img src="images/score-board.png" alt="img" id="scoreBoard" />
+      <img src="images/laser-green.png" alt="img" id="greenLaser" />
+      <img src="images/red-laser.png" alt="img" id="redLaser" />
+      <img src="images/explosion-image.png" alt="img" id="explosion" />
+    </div>
 
     <!-- script -->
     <script src="scripts/main.js" type="module"></script>

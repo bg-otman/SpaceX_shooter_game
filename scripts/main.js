@@ -8,6 +8,13 @@ import { Boom } from "./explosion.js";
 
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
+// music
+const gameMusic = document.getElementById("music");
+let musicOn = true;
+const musicImgContainer = document.querySelector(".msc");
+const musicIcon = document.getElementById("musicIcon");
+const ICON_VOLUME_PATH = "../images/volume.png";
+const ICON_MUTE_PATH = "../images/mute.png";
 
 canvas.width = 700;
 canvas.height = 650;
@@ -157,7 +164,13 @@ function animate(timeStamp) {
     gameEnd(ctx, game);
   }
 }
-animate(0);
+// start animate
+document.getElementById("startBtn").addEventListener("click", () => {
+  // hide start game page
+  document.querySelector(".start_game").style.display = "none";
+  controlMusic();
+  animate(0);
+});
 
 function restartGame(game) {
   game.player = new Player(game, game.gameWidth, game.gameHeight);
@@ -176,4 +189,24 @@ function restartGame(game) {
   game.enemyShotTimer = 0;
   game.shotInterval = 500;
   animate(0);
+}
+
+musicImgContainer.addEventListener("click", () => {
+  musicOn = !musicOn;
+  controlMusic();
+});
+
+gameMusic.addEventListener("ended", () => {
+  controlMusic();
+});
+
+function controlMusic() {
+  if (musicOn) {
+    musicIcon.src = ICON_VOLUME_PATH;
+    gameMusic.volume = 0.5;
+    gameMusic.play();
+  } else {
+    musicIcon.src = ICON_MUTE_PATH;
+    gameMusic.pause();
+  }
 }
