@@ -1,5 +1,7 @@
 const healthContainer = 300;
 const scoreBoardImg = document.getElementById("scoreBoard");
+const myFont = new FontFace("Arcade", "url(../arcade_font/ARCADE_N.TTF)");
+document.fonts.add(myFont);
 
 export function playerHealth(ctx, game) {
   const healthBarX = game.gameWidth * 0.5 - healthContainer * 0.5;
@@ -53,20 +55,30 @@ export function shotsAmo(ctx, game) {
 }
 
 export function gameEnd(ctx, game) {
+  myFont.load().then(() => {
+    ctx.save();
+    ctx.font = "55px Arcade";
+    ctx.shadowOffsetX = 2;
+    ctx.shadowOffsetY = 3;
+    ctx.shadowBlur = 2;
+    ctx.shadowColor = "white";
+    ctx.textAlign = "center";
+    ctx.fillStyle = "#ee3434";
+    ctx.fillText("Game Over!", game.gameWidth * 0.5, game.gameHeight * 0.4);
+    ctx.font = "bold 20px Arcade";
+    ctx.fillText(
+      "Press Enter to Restart",
+      game.gameWidth * 0.5,
+      game.gameHeight * 0.5
+    );
+    ctx.restore();
+  });
+}
+
+export function bestScore(ctx, game) {
   ctx.save();
-  ctx.font = "60px fantasy";
-  ctx.shadowOffsetX = 2;
-  ctx.shadowOffsetY = 3;
-  ctx.shadowBlur = 2;
-  ctx.shadowColor = "white";
-  ctx.textAlign = "center";
-  ctx.fillStyle = "#ee3434";
-  ctx.fillText("Game Over!", game.gameWidth * 0.5, game.gameHeight * 0.4);
-  ctx.font = "40px fantasy";
-  ctx.fillText(
-    "Press Enter to Restart",
-    game.gameWidth * 0.5,
-    game.gameHeight * 0.5
-  );
+  ctx.font = "28px fantasy";
+  ctx.fillStyle = "#10cad9";
+  ctx.fillText(`Best Score: ${game.bestScore}`, 90, game.gameHeight - 20);
   ctx.restore();
 }

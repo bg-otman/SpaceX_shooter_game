@@ -32,6 +32,14 @@ export class Shots {
           if (this.game.maxShots < 15) this.game.maxShots++;
 
           this.game.gameScore++;
+
+          if (this.game.gameScore > this.game.bestScore) {
+            this.game.bestScore = this.game.gameScore;
+            localStorage.setItem(
+              "bestScore",
+              JSON.stringify(this.game.gameScore)
+            );
+          }
         }
       }
     });

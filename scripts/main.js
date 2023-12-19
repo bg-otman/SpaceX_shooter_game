@@ -3,7 +3,7 @@ import { Inputs } from "./inputs.js";
 import { Background } from "./background.js";
 import { Shots, EnemyShots } from "./shots.js";
 import { Enemy } from "./enemies.js";
-import { playerHealth, score, shotsAmo, gameEnd } from "./ui.js";
+import { playerHealth, score, shotsAmo, gameEnd, bestScore } from "./ui.js";
 import { Boom } from "./explosion.js";
 
 const canvas = document.getElementById("myCanvas");
@@ -20,6 +20,7 @@ class Game {
     this.background = new Background(this, this.gameWidth, this.gameHeight);
     this.gameOver = false;
     this.gameScore = 0;
+    this.bestScore = JSON.parse(localStorage.getItem("bestScore")) || 0;
     this.shots = [];
     this.enemies = [];
     this.enemyShots = [];
@@ -100,6 +101,7 @@ class Game {
     this.enemyShots.forEach((shot) => shot.draw(ctx));
     this.explosions.forEach((boom) => boom.draw(ctx));
     score(ctx, this);
+    bestScore(ctx, this);
     shotsAmo(ctx, this);
   }
   ///
@@ -161,6 +163,7 @@ function restartGame(game) {
   game.player = new Player(game, game.gameWidth, game.gameHeight);
   game.gameOver = false;
   game.gameScore = 0;
+  game.bestScore = JSON.parse(localStorage.getItem("bestScore")) || 0;
   game.shots = [];
   game.enemies = [];
   game.enemyShots = [];
