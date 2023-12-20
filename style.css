@@ -28,20 +28,24 @@ img {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgb(82, 128, 128);
+  background-image: url(images/start_game_bg.png);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .start_game #startBtn {
   padding: 15px 20px;
-  background-image: url(images/Nebula\ Blue.png);
-  background-size: cover;
+  background-color: transparent;
+  border: none;
   font-size: 40px;
   font-weight: bold;
   font-family: Arcade;
   color: whitesmoke;
   cursor: pointer;
+  transition: 0.3s;
+}
+.start_game #startBtn:hover {
+  color: rgb(250, 228, 31);
 }
 
 #myCanvas {
