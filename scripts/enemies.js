@@ -12,6 +12,7 @@ export class Enemy {
     this.markedForDeletion = false;
     this.dx = Math.ceil(Math.random() * 2);
     this.enemyHealth = 2;
+    this.healthBar = 100;
   }
   update() {
     // vertical mouvement
@@ -32,6 +33,7 @@ export class Enemy {
   ///
   draw(ctx) {
     ctx.drawImage(this.imageEnemy, this.x, this.y, this.width, this.height);
+    this.enemyHealthBar(ctx);
   }
   ///
   enemyPlayerCollision() {
@@ -41,5 +43,24 @@ export class Enemy {
       this.x + this.width >= this.game.player.x &&
       this.x < this.game.player.x + this.game.player.width
     );
+  }
+  ///
+  enemyHealthBar(ctx) {
+    ctx.fillStyle = "red";
+    ctx.fillRect(
+      this.x + this.width * 0.2,
+      this.y + this.height + 10,
+      this.healthBar,
+      10
+    );
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = "white";
+    ctx.strokeRect(
+      this.x + this.width * 0.2,
+      this.y + this.height + 10,
+      100,
+      10
+    );
+    ctx.stroke();
   }
 }

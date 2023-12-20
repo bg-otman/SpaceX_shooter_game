@@ -22,6 +22,7 @@ export class Shots {
       if (this.playerShotCollision(enemy)) {
         if (enemy.enemyHealth > 0) {
           enemy.enemyHealth--;
+          enemy.healthBar -= 40;
           this.markedForDeletion = true;
           // after the shot hit the enemy, recharge the bullets again
           if (this.game.maxShots < 15) this.game.maxShots++;

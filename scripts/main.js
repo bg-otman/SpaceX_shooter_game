@@ -158,6 +158,7 @@ function animate(timeStamp) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   game.update(inputs, deltaTime);
   game.draw(ctx);
+  gameLevels(game);
   if (!game.gameOver) {
     requestAnimationFrame(animate);
   } else {
@@ -208,5 +209,15 @@ function controlMusic() {
   } else {
     musicIcon.src = ICON_MUTE_PATH;
     gameMusic.pause();
+  }
+}
+
+function gameLevels(game) {
+  if (game.gameScore > 99) {
+    game.enemiesInterval = 2000;
+  } else if (game.gameScore > 60) {
+    game.enemiesInterval = 2500;
+  } else if (game.gameScore > 30) {
+    game.enemiesInterval = 3000;
   }
 }
