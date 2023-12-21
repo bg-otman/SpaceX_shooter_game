@@ -19,8 +19,8 @@ export function playerHealth(ctx, game) {
 
   // Draw health bar container
   ctx.save();
-  ctx.strokeStyle = "#66923d";
-  ctx.lineWidth = 4;
+  ctx.strokeStyle = "#fff";
+  ctx.lineWidth = 3;
   ctx.strokeRect(healthBarX, healthBarY, healthContainer, 20);
   ctx.restore();
 }

@@ -14,7 +14,7 @@ export class Background {
     if (this.starsY > this.gameHeight) this.starsY = 0;
   }
   draw(ctx) {
-    // fix background
+    // fixed background
     ctx.drawImage(
       this.background,
       this.x,

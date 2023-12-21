@@ -47,8 +47,6 @@ export class Player {
     if (this.health <= 0) this.playerDead = true;
   }
   draw(ctx) {
-    // ctx.strokeStyle = "white";
-    // ctx.strokeRect(this.x, this.y, this.width, this.height);
     if (!this.playerDead) {
       ctx.drawImage(this.playerImage, this.x, this.y, this.width, this.height);
     }
